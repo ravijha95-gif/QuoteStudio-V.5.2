@@ -1,0 +1,6 @@
+{
+  "name": "QuoteStudio",
+  "description": "Visual Instagram post, quote, and caption generator with intelligent meaning analysis, customizable templates, and aesthetic layouts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

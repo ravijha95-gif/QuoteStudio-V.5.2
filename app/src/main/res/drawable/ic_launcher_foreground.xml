@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Card outline with rounded corners -->
+    <path
+        android:fillColor="#1E293B"
+        android:strokeColor="#38BDF8"
+        android:strokeWidth="2.2"
+        android:pathData="M31,27 L77,27 A6,6 0 0,1 83,33 L83,75 A6,6 0 0,1 77,81 L31,81 A6,6 0 0,1 25,75 L25,33 A6,6 0 0,1 31,27 Z" />
+
+    <!-- Top decorative tagline rule -->
+    <path
+        android:strokeColor="#60A5FA"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M33,35 L47,35" />
+
+    <!-- Bold Quote marks -->
+    <path
+        android:fillColor="#F8FAFC"
+        android:pathData="M36,45 C36,43 38,41 41,41 C44,41 46,43 46,46 C46,50 43,55 37,58 L35,55 C39,53 41,50 41,47 C38,47 36,46 36,45 Z" />
+
+    <path
+        android:fillColor="#F8FAFC"
+        android:pathData="M48,45 C48,43 50,41 53,41 C56,41 58,43 58,46 C58,50 55,55 49,58 L47,55 C51,53 53,50 53,47 C50,47 48,46 48,45 Z" />
+
+    <!-- Aesthetic layout lines in card -->
+    <path
+        android:strokeColor="#94A3B8"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M34,63 L74,63" />
+
+    <path
+        android:strokeColor="#64748B"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M34,69 L60,69" />
+
+    <!-- Sparkle star top-right -->
+    <path
+        android:fillColor="#FACC15"
+        android:pathData="M73,34 L74.5,39 L79.5,40.5 L74.5,42 L73,47 L71.5,42 L66.5,40.5 L71.5,39 Z" />
+
+</vector>
