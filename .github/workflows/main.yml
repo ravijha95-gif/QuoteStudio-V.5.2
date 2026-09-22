@@ -1,0 +1,78 @@
+name: Build QuoteStudio APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Verify Android SDK
+        shell: bash
+        run: |
+          set -e
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "Android SDK: $SDK_ROOT"
+          test -d "$SDK_ROOT/platforms/android-36.1" || {
+            echo "Android SDK platform 36.1 not found."
+            find "$SDK_ROOT/platforms" -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort || true
+            exit 1
+          }
+          test -d "$SDK_ROOT/build-tools/36.1.0" || {
+            echo "Android Build Tools 36.1.0 not found."
+            find "$SDK_ROOT/build-tools" -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort || true
+            exit 1
+          }
+          echo "Android SDK 36.1 and Build Tools 36.1.0 are available."
+
+      # This project has no gradlew wrapper. Provision the compatible Gradle
+      # version directly instead of trying to chmod a nonexistent ./gradlew.
+      - name: Ensure secrets template exists
+        shell: bash
+        run: |
+          set -e
+          # GitHub browser uploads can omit dotfiles. The Android Secrets
+          # Gradle plugin requires this file during project configuration.
+          if [ ! -f .env.example ]; then
+            printf '%s\n' \
+              '# Build-time placeholder for QuoteStudio.' \
+              '# Configure a real Gemini API key separately if the app requires one.' \
+              'GEMINI_API_KEY=MY_GEMINI_API_KEY' > .env.example
+            echo ".env.example was missing; created a safe build placeholder."
+          else
+            echo ".env.example found."
+          fi
+          test -f .env.example
+
+      - name: Set up Gradle 9.3.1
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.3.1"
+
+      - name: Show Gradle version
+        run: gradle --version
+
+      - name: Build Debug APK
+        run: gradle --no-daemon assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuoteStudio-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
